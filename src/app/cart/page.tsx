@@ -92,7 +92,7 @@ export default function CartPage() {
       {cartItems.length === 0 ? (
         <div className="text-center py-12 bg-white rounded-lg shadow-md">
           <h2 className="text-xl text-gray-600 mb-4">Your cart is empty</h2>
-          <Link href="/" className="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 transition-colors cursor-pointer">
+          <Link href="/" className="bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 transition-colors cursor-pointer">
             Continue Shopping
           </Link>
         </div>

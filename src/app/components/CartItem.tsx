@@ -25,7 +25,7 @@ const CartItem: React.FC<CartItemProps> = ({ item, onUpdateQuantity, onRemoveIte
           <div className="text-2xl text-gray-400">📚</div>
         </div>
         <div>
-          <Link href={`/book/${book.id}`} className="text-lg font-semibold text-gray-800 hover:text-blue-500 cursor-pointer">
+          <Link href={`/book/${book.id}`} className="text-lg font-semibold text-gray-800 hover:text-indigo-700 cursor-pointer">
             {book.title}
           </Link>
           <p className="text-sm text-gray-600">by {book.author}</p>
