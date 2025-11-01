@@ -25,20 +25,26 @@ const BookGrid: React.FC<BookGridProps> = ({ onAddToCart }) => {
 
   // --- Fetch books from API ---
   useEffect(() => {
-    const fetchBooks = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch('/api/books');
-        if (!response.ok) throw new Error('Failed to fetch books');
-        const data: Book[] = await response.json();
-        setBooks(data);
-      } catch (err: any) {
-        console.error(err);
-        setError(err.message || 'Something went wrong');
-      } finally {
-        setLoading(false);
-      }
-    };
+   const fetchBooks = async () => {
+  setLoading(true);
+  try {
+    const response = await fetch('/api/books');
+    if (!response.ok) throw new Error('Failed to fetch books');
+    const data: Book[] = await response.json();
+    setBooks(data);
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.error(err);
+      setError(err.message);
+    } else {
+      console.error('Unknown error:', err);
+      setError('Something went wrong');
+    }
+  } finally {
+    setLoading(false);
+  }
+};
+
 
     fetchBooks();
   }, []);

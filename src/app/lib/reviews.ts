@@ -5,16 +5,32 @@ import { Review } from '@/app/types';
 const COLLECTION_NAME = 'reviews';
 
 // ✅ Helper: map MongoDB document to Review type
-const mapToReview = (doc: any): Review => ({
-  id: doc._id.toHexString(),
-  bookId: doc.bookId instanceof ObjectId ? doc.bookId.toHexString() : doc.bookId,
-  author: doc.author,
-  rating: doc.rating,
-  title: doc.title,
-  comment: doc.comment,
-  timestamp: doc.timestamp,
-  verified: doc.verified ?? false,
-});
+const mapToReview = (doc: unknown): Review => {
+  if (!doc || typeof doc !== 'object') throw new Error('Invalid document');
+
+  const d = doc as { 
+    _id: ObjectId; 
+    bookId: ObjectId | string; 
+    author: string; 
+    rating: number; 
+    title: string; 
+    comment: string; 
+    timestamp: string; 
+    verified?: boolean; 
+  };
+
+  return {
+    id: d._id.toHexString(),
+    bookId: d.bookId instanceof ObjectId ? d.bookId.toHexString() : d.bookId,
+    author: d.author,
+    rating: d.rating,
+    title: d.title,
+    comment: d.comment,
+    timestamp: d.timestamp,
+    verified: d.verified ?? false,
+  };
+};
+
 
 /**
  * ✅ Get all reviews for a book

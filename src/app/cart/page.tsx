@@ -138,8 +138,9 @@ export default function CartPage() {
           <div className="text-8xl mb-4">🛒</div>
           <h1 className="text-3xl font-bold text-gray-800 mb-4">Your Cart is Empty</h1>
           <p className="text-gray-600 mb-8">
-            Looks like you haven't added any books to your cart yet.
-          </p>
+           Looks like you haven&apos;t added any books to your cart yet.
+        </p>
+
           <Link 
             href="/"
             className="inline-block bg-indigo-600 text-white px-8 py-3 rounded-md hover:bg-indigo-700 transition-colors duration-300 font-semibold"
