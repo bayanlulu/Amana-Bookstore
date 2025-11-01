@@ -4,8 +4,8 @@
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { books } from '../../data/books';
-import { reviews } from '../../data/reviews';
+// import { books } from '../../data/books';
+// import { reviews } from '../../data/reviews';
 import { Book, CartItem, Review } from '../../types';
 
 export default function BookDetailPage() {
@@ -19,19 +19,31 @@ export default function BookDetailPage() {
   const router = useRouter();
   const { id } = params;
 
-  useEffect(() => {
-    if (id) {
-      const foundBook = books.find((b) => b.id === id);
-      if (foundBook) {
-        setBook(foundBook);
-        // Get reviews for this book
-        const bookReviewsData = reviews.filter((review) => review.bookId === id);
-        setBookReviews(bookReviewsData);
-      } else {
-        setError('Book not found.');
-      }
+ useEffect(() => {
+    if (!id) return;
+
+    let mounted = true;
+    const fetchAll = async () => {
+      setIsLoading(true);
+      const bookPromise = fetch(`/api/books/${id}`).then(r => r.ok ? r.json() : Promise.reject('Book not found'));
+      const reviewsPromise = fetch(`/api/reviews/${id}`).then(r => r.ok ? r.json() : Promise.reject('Failed to fetch reviews'));
+
+      const [bookRes, reviewsRes] = await Promise.allSettled([bookPromise, reviewsPromise]);
+
+      if (!mounted) return;
+
+      if (bookRes.status === 'fulfilled') setBook(bookRes.value);
+      else setError(String((bookRes as PromiseRejectedResult).reason));
+
+      if (reviewsRes.status === 'fulfilled') setBookReviews(reviewsRes.value);
+      else console.error((reviewsRes as PromiseRejectedResult).reason);
+
       setIsLoading(false);
-    }
+    };
+
+    fetchAll();
+
+    return () => { mounted = false; };
   }, [id]);
 
   const handleAddToCart = () => {
