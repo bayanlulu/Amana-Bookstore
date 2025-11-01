@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Book } from '../types';
 
+
 interface BookCardProps {
   book: Book;
   onAddToCart?: (bookId: string) => void;
