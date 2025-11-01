@@ -105,7 +105,7 @@ const BookListItem: React.FC<BookListItemProps> = ({ book, onAddToCart }) => {
               <div className="flex items-center mt-2 gap-2">
                 {renderStars(book.rating)}
                 <span className="text-sm text-gray-500">
-                  {book.rating.toFixed(1)} ({book.reviewCount.toLocaleString()} reviews)
+              {book.rating.toFixed(1)} ({book.reviewCount.toLocaleString('en-US')} reviews)
                 </span>
               </div>
 
