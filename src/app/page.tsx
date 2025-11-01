@@ -1,18 +1,40 @@
 // src/app/page.tsx
 'use client';
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Book } from './types';
 import BookGrid from './components/BookGrid';
-import { books } from './data/books';
 
 export default function HomePage() {
-  // Simple cart handler for demo purposes
-  const handleAddToCart = (bookId: string) => {
-    console.log(`Added book ${bookId} to cart`);
-    // Here you would typically dispatch to a cart state or call an API
-  };
+  const [books, setBooks] = useState<Book[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  return (
+ useEffect(() => {
+    // Simulate initial load check if needed
+    setLoading(false);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-xl">Loading books...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-xl text-red-600">{error}</div>
+      </div>
+    );
+  }
+
+  // function handleAddToCart(bookId: string): void {
+  //   throw new Error('Function not implemented.');
+  // }
+
+   return (
     <div className="container mx-auto px-4 py-8">
       {/* Welcome Section */}
       <section className="text-center bg-indigo-500 hover:bg-indigo-600 p-8 rounded-lg mb-12 shadow-md">
@@ -23,7 +45,7 @@ export default function HomePage() {
       </section>
 
       {/* Book Grid */}
-      <BookGrid books={books} onAddToCart={handleAddToCart} />
+        <BookGrid  />
     </div>
   );
 }
